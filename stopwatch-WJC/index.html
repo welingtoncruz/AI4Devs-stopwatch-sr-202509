@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicação de cronômetro e contador regressivo com múltiplos timers simultâneos">
+    <title>Stopwatch & Countdown Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Container Principal -->
+    <main class="app-container">
+        <!-- Cabeçalho -->
+        <header class="app-header">
+            <h1 class="app-title">⏱️ Stopwatch & Countdown</h1>
+            <p class="app-subtitle">Gerencie múltiplos cronômetros e contadores regressivos simultaneamente</p>
+        </header>
+
+        <!-- Botões de Ação Principal -->
+        <section class="action-buttons">
+            <button id="addStopwatch" class="btn btn-add btn-stopwatch">
+                <span class="btn-icon">⏱️</span>
+                Adicionar Cronômetro
+            </button>
+            <button id="addCountdown" class="btn btn-add btn-countdown">
+                <span class="btn-icon">⏲️</span>
+                Adicionar Countdown
+            </button>
+        </section>
+
+        <!-- Container de Timers -->
+        <section id="timersContainer" class="timers-container">
+            <!-- Os timers serão adicionados dinamicamente aqui -->
+        </section>
+
+        <!-- Mensagem quando não há timers -->
+        <div id="emptyState" class="empty-state">
+            <div class="empty-icon">⏰</div>
+            <h2>Nenhum timer criado</h2>
+            <p>Clique em um dos botões acima para começar!</p>
+        </div>
+    </main>
+
+    <!-- Template para Cronômetro (escondido, será clonado via JavaScript) -->
+    <template id="stopwatchTemplate">
+        <article class="timer-card stopwatch-card">
+            <div class="timer-header">
+                <h3 class="timer-title">⏱️ Cronômetro #<span class="timer-number"></span></h3>
+                <button class="btn-remove" aria-label="Remover timer">✕</button>
+            </div>
+            
+            <div class="timer-display">
+                <div class="display-time">00:00:00</div>
+                <div class="display-milliseconds">000</div>
+            </div>
+            
+            <div class="timer-controls">
+                <button class="btn btn-control btn-start" data-action="start">
+                    <span class="btn-text">Start</span>
+                </button>
+                <button class="btn btn-control btn-clear" data-action="clear">
+                    <span class="btn-text">Clear</span>
+                </button>
+            </div>
+        </article>
+    </template>
+
+    <!-- Template para Countdown (escondido, será clonado via JavaScript) -->
+    <template id="countdownTemplate">
+        <article class="timer-card countdown-card">
+            <div class="timer-header">
+                <h3 class="timer-title">⏲️ Countdown #<span class="timer-number"></span></h3>
+                <button class="btn-remove" aria-label="Remover timer">✕</button>
+            </div>
+            
+            <!-- Inputs para configurar tempo inicial -->
+            <div class="countdown-inputs">
+                <div class="input-group">
+                    <label for="hours">Horas</label>
+                    <input type="number" class="input-time input-hours" min="0" max="99" value="0" placeholder="00">
+                </div>
+                <div class="input-separator">:</div>
+                <div class="input-group">
+                    <label for="minutes">Minutos</label>
+                    <input type="number" class="input-time input-minutes" min="0" max="59" value="0" placeholder="00">
+                </div>
+                <div class="input-separator">:</div>
+                <div class="input-group">
+                    <label for="seconds">Segundos</label>
+                    <input type="number" class="input-time input-seconds" min="0" max="59" value="0" placeholder="00">
+                </div>
+            </div>
+            
+            <div class="timer-display">
+                <div class="display-time">00:00:00</div>
+                <div class="display-milliseconds">000</div>
+            </div>
+            
+            <div class="timer-controls">
+                <button class="btn btn-control btn-start" data-action="start">
+                    <span class="btn-text">Start</span>
+                </button>
+                <button class="btn btn-control btn-clear" data-action="clear">
+                    <span class="btn-text">Clear</span>
+                </button>
+            </div>
+
+            <!-- Alerta visual quando countdown termina -->
+            <div class="countdown-alert" style="display: none;">
+                <span class="alert-icon">⏰</span>
+                <span class="alert-text">Tempo Esgotado!</span>
+            </div>
+        </article>
+    </template>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
